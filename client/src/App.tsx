@@ -6,7 +6,7 @@ import PrivateRoute from "./components/Auth/PrivateRoute";
 import Dashboard from "./pages/Dashboard";
 import { Toaster } from "react-hot-toast";
 import Classroom from "./pages/Classrooms";
-import ClassroomManager from "./pages/classroomManager";
+import ClassroomManager from "./pages/ClassroomManager";
 
 const App = () => {
   return (

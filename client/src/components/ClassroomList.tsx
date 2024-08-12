@@ -11,7 +11,6 @@ import {
   TableRow,
   Paper,
 } from "@mui/material";
-import { useAppSelector } from "@/store/hooks";
 import { Classroom } from "@/types/type";
 
 // interface Classroom {
@@ -22,9 +21,7 @@ import { Classroom } from "@/types/type";
 // }
 
 const ClassroomList: React.FC = () => {
-  const { role } = useAppSelector((state) => {
-    return state.Auth;
-  });
+  
 
   const {
     data: classrooms,

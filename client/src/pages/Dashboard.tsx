@@ -1,6 +1,6 @@
 import { privateApi } from "@/axios/Axios";
 import ClassroomList from "@/components/ClassroomList";
-import UserDialog from "@/components/userDialog";
+import UserDialog from "@/components/UserDialog";
 import { useAppSelector } from "@/store/hooks";
 import {
   Button,

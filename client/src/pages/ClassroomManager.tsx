@@ -21,7 +21,7 @@ import { Student } from "@/types/type";
 //   email: string;
 // }
 
-const ClassroomManagement: React.FC = () => {
+const ClassroomManager: React.FC = () => {
   const { classroomId } = useParams<{ classroomId: string }>();
 
   // Fetch classroom details
@@ -146,4 +146,4 @@ const ClassroomManagement: React.FC = () => {
   );
 };
 
-export default ClassroomManagement;
+export default ClassroomManager;
