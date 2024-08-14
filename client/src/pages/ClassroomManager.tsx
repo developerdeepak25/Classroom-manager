@@ -25,18 +25,18 @@ const ClassroomManager: React.FC = () => {
   const { classroomId } = useParams<{ classroomId: string }>();
 
   // Fetch classroom details
-  const { data: classroom, refetch: refetchClassroom } = useQuery({
+  const { data: classroom, refetch: refetchClassroom ,isLoading:isLoadingClass} = useQuery({
     queryKey: ["classroom", classroomId],
     queryFn: async () => {
       const response = await privateApi.get(`/classroom/${classroomId}`);
-      console.log('response.data of get classroom',response.data);
-      
+      console.log("response.data of get classroom", response.data);
+
       return response.data;
     },
   });
 
   // Fetch students not in this class
-  const { data: availableStudents, refetch: refetchAvailableStudents } =
+  const { data: availableStudents, refetch: refetchAvailableStudents, isLoading: isLoadingAvailableStudents } =
     useQuery({
       queryKey: ["availableStudents", classroomId],
       queryFn: async () => {
@@ -82,6 +82,7 @@ const ClassroomManager: React.FC = () => {
       <Typography variant="h5" gutterBottom>
         Students in Class
       </Typography>
+
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
@@ -91,6 +92,9 @@ const ClassroomManager: React.FC = () => {
               <TableCell>Action</TableCell>
             </TableRow>
           </TableHead>
+          {isLoadingClass && <div>
+            loading...
+          </div>}
           <TableBody>
             {classroom?.students?.map((student: Student) => (
               <TableRow key={student._id}>
@@ -102,7 +106,7 @@ const ClassroomManager: React.FC = () => {
                     color="secondary"
                     onClick={() => removeStudentMutation.mutate(student._id)}
                   >
-                    Remove
+                    {removeStudentMutation.isPending ? "removing.." : "Remove"}
                   </Button>
                 </TableCell>
               </TableRow>
@@ -114,6 +118,7 @@ const ClassroomManager: React.FC = () => {
       <Typography variant="h5" gutterBottom style={{ marginTop: "2rem" }}>
         Available Students
       </Typography>
+
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
@@ -123,6 +128,7 @@ const ClassroomManager: React.FC = () => {
               <TableCell>Action</TableCell>
             </TableRow>
           </TableHead>
+          {isLoadingAvailableStudents && <div>loading....</div>}
           <TableBody>
             {availableStudents?.map((student: Student) => (
               <TableRow key={student._id}>
@@ -134,7 +140,7 @@ const ClassroomManager: React.FC = () => {
                     color="primary"
                     onClick={() => addStudentMutation.mutate(student._id)}
                   >
-                    Add
+                    {addStudentMutation.isPending ? "adding.." : "Add"}
                   </Button>
                 </TableCell>
               </TableRow>

@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 // interface User {
 //   _id: string;
@@ -82,18 +83,23 @@ const Dashboard = () => {
 
   const handleDelete = (userId: string) => {
     if (window.confirm("Are you sure you want to delete this user?")) {
-      privateApi
-        .delete(`/users/delete/${userId}`)
-        .then(() => {
-          refetch();
-          // Refetch users after successful deletion
-          // QueryClient.invalidateQueries(["users"]);
-        })
-        .catch((error) => {
-          console.error("Error deleting user:", error);
-        });
+     deleteUserMutation.mutate(userId)
     }
   };
+
+  const deleteUserMutation = useMutation({
+    mutationFn: (userId: string) =>
+      privateApi.delete(`/users/delete/${userId}`),
+    onSuccess: () => {
+      toast.success("User deleted successfully");
+      refetch()
+    },
+    onError: (error) => {
+      toast.success("something went wrong");
+      console.error("Error deleting user:", error);
+    },
+  });
+
   const handleEditUser = (user: UserData) => {
     setIsEditMode(true);
     setSelectedUser(user);
@@ -199,9 +205,6 @@ const Dashboard = () => {
           setOpenDialog={setOpenDialog}
         /> */}
 
-        <Typography variant="h5" gutterBottom sx={{ mt: 4 }}>
-          Classrooms{" "}
-        </Typography>
 
         <ClassroomList />
 
