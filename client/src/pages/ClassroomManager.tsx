@@ -92,9 +92,7 @@ const ClassroomManager: React.FC = () => {
               <TableCell>Action</TableCell>
             </TableRow>
           </TableHead>
-          {isLoadingClass && <div>
-            loading...
-          </div>}
+          {isLoadingClass && <div>loading...</div>}
           <TableBody>
             {classroom?.students?.map((student: Student) => (
               <TableRow key={student._id}>
@@ -107,6 +105,7 @@ const ClassroomManager: React.FC = () => {
                     onClick={() => removeStudentMutation.mutate(student._id)}
                   >
                     {removeStudentMutation.isPending ? "removing.." : "Remove"}
+                    {/* this will show removing for all button fix is easy create a sprreate componnents with mutation //TODO */}
                   </Button>
                 </TableCell>
               </TableRow>
@@ -141,6 +140,7 @@ const ClassroomManager: React.FC = () => {
                     onClick={() => addStudentMutation.mutate(student._id)}
                   >
                     {addStudentMutation.isPending ? "adding.." : "Add"}
+                    {/* this will show adding.. for all button fix is easy create a sprreate componnents with mutation //TODO */}
                   </Button>
                 </TableCell>
               </TableRow>
